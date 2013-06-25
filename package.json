@@ -1,0 +1,23 @@
+{
+  "name": "restful-mbta",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/maxmechanic/restful-mbta.git"
+  },
+  "author": "maxmechanic",
+  "license": "MIT",
+  "dependencies": {
+    "request": "~2.21.0",
+    "lodash": "~1.3.1"
+  },
+  "readmeFilename": "README.md",
+  "gitHead": "4e25535b4ebaed63750c8c7921ac5477a69ef81c",
+  "devDependencies": {},
+  "keywords": [
+    "transit",
+    "mbta"
+  ]
+}
