@@ -13,6 +13,8 @@ client = new MBTA("CURRENT_DEMO_KEY")
 routePromise = client.findRoutes("Ferry")
 routePromise.then((response) ->
   console.log JSON.stringify response, false, 4
+).fail((err) ->
+  console.log err
 ).done()
 ```
 ##### node
@@ -22,6 +24,8 @@ var client = new MBTA("CURRENT_DEMO_KEY");
 var routePromise = client.findRoutes("Ferry");
 routePromise.then(function(response) {
   console.log(JSON.stringify(response, false, 4))
+}).fail(function(err){
+  console.log(err)
 }).done();
 ```
 
