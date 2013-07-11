@@ -3,7 +3,8 @@ request = require 'request'
 _ = require 'lodash'
 
 class MBTA
-  constructor: (@key) -> @apiUrl = 'http://realtime.mbta.com/developer/api/v1/'
+  constructor: (@key) ->
+    @apiUrl = 'http://realtime.mbta.com/developer/api/v1/'
 
   buildOptions: (path, qsOpts) ->
     (
@@ -16,38 +17,50 @@ class MBTA
     deferred = Q.defer()
 
     request.get opts, (e,r,body) ->
-      if e
-        deferred.reject e
-      else
-        deferred.resolve body
+      return deferred.reject e if e
+      deferred.resolve body
 
     deferred.promise
 
-  _addKey: (opts) -> _.extend opts, "api_key": @key
+  _addKey: (opts) ->
+    opts["api_key"] = @key
+    opts
 
-  servertime: -> @_doRequest @buildOptions "servertime", @_addKey({})
+  servertime: ->
+    @_doRequest @buildOptions "servertime", @_addKey({})
 
-  routes: -> @_doRequest @buildOptions "routes", @_addKey({})
+  routes: ->
+    @_doRequest @buildOptions "routes", @_addKey({})
 
-  routesByStop: (stop) -> @_doRequest @buildOptions "routesbystop", @_addKey({ stop })
+  routesByStop: (stop) ->
+    @_doRequest @buildOptions "routesbystop", @_addKey({ stop })
 
-  stopsByRoute: (route) -> @_doRequest @buildOptions "stopsbyroute", @_addKey({ route })
+  stopsByRoute: (route) ->
+    @_doRequest @buildOptions "stopsbyroute", @_addKey({ route })
 
-  stopsByLocation: (pos) -> @_doRequest @buildOptions "stopsbylocation", @_addKey({ lat: pos.lat, lon: pos.lon })
+  stopsByLocation: (pos) ->
+    @_doRequest @buildOptions "stopsbylocation", @_addKey({ lat: pos.lat, lon: pos.lon })
 
-  scheduleByStop: (opts) -> @_doRequest @buildOptions "schedulebystop", @_addKey(opts)
+  scheduleByStop: (opts) ->
+    @_doRequest @buildOptions "schedulebystop", @_addKey(opts)
 
-  scheduleByRoute: (opts) -> @_doRequest @buildOptions "schedulebyroute", @_addKey(opts)
+  scheduleByRoute: (opts) ->
+    @_doRequest @buildOptions "schedulebyroute", @_addKey(opts)
 
-  scheduleByTrip: (opts) -> @_doRequest @buildOptions "schedulebytrip", @_addKey(opts)
+  scheduleByTrip: (opts) ->
+    @_doRequest @buildOptions "schedulebytrip", @_addKey(opts)
 
-  alerts: -> @_doRequest @buildOptions "alerts", @_addKey({})
+  alerts: ->
+    @_doRequest @buildOptions "alerts", @_addKey({})
 
-  alertByID: (id) -> @_doRequest @buildOptions "alertbyid", @_addKey({ id })
+  alertByID: (id) ->
+    @_doRequest @buildOptions "alertbyid", @_addKey({ id })
 
-  alertHeadersByRoute: (route) -> @_doRequest @buildOptions "alertheadersbyroute", @_addKey({ route })
+  alertHeadersByRoute: (route) ->
+    @_doRequest @buildOptions "alertheadersbyroute", @_addKey({ route })
 
-  alertHeadersByStop: (stop) -> @_doRequest @buildOptions "alertheadersbystop", @_addKey({ stop })
+  alertHeadersByStop: (stop) ->
+    @_doRequest @buildOptions "alertheadersbystop", @_addKey({ stop })
 
   _parseRoutes: (deferred, routeKey, routes) ->
     routeArray = routes.mode.map (r) ->
@@ -57,7 +70,7 @@ class MBTA
       route
 
     routeList = _.flatten routeArray
-    filteredList = _.filter routeList, (r) -> _.contains r.route_name, routeKey
+    filteredList = routeList.filter (r) -> routeKey in r.route_name
 
     deferred.resolve filteredList
 
