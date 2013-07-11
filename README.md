@@ -16,7 +16,7 @@ routePromise.then (response) ->
 ```
 ##### node
 ```javascript
-var MBTA = require('./mbta');
+var MBTA = require('./index');
 var client = new MBTA("CURRENT_DEMO_KEY");
 var routePromise = client.findRoutes("Ferry");
 routePromise.then(function(response) {
