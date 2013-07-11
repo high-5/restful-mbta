@@ -1,4 +1,5 @@
-$ = require 'jquery'
+Q = require 'q'
+request = require 'request'
 _ = require 'lodash'
 
 class MBTA
@@ -7,12 +8,20 @@ class MBTA
   buildOptions: (path, qsOpts) ->
     (
       url: "#{@apiUrl}#{path}"
-      type: 'GET'
-      dataType: 'json'
-      data: qsOpts
+      json: true
+      qs: qsOpts
     )
 
-  _doRequest: (opts) -> $.ajax(opts).promise()
+  _doRequest: (opts) ->
+    deferred = Q.defer()
+
+    request.get opts, (e,r,body) ->
+      if e
+        deferred.reject e
+      else
+        deferred.resolve body
+
+    deferred.promise
 
   _addKey: (opts) -> _.extend opts, "api_key": @key
 
@@ -53,9 +62,9 @@ class MBTA
     deferred.resolve filteredList
 
   findRoutes: (routeKey) ->
-    deferred = $.Deferred()
+    deferred = Q.defer()
     parseRoutes = @_parseRoutes.bind @, deferred, routeKey
     @routes().then(parseRoutes).fail (e) -> deferred.reject e
-    deferred.promise()
+    deferred.promise
 
 module.exports = MBTA
