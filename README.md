@@ -8,7 +8,7 @@ Node.js wrapper for MBTA's RESTful API.
 
 ##### coffee
 ```coffeescript
-MBTA = require './mbta'
+MBTA = require './src/mbta'
 client = new MBTA("CURRENT_DEMO_KEY")
 routePromise = client.findRoutes("Ferry")
 routePromise.then((response) ->
