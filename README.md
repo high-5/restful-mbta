@@ -11,10 +11,12 @@ Node.js wrapper for MBTA's RESTful API.
 MBTA = require './src/mbta'
 client = new MBTA("CURRENT_DEMO_KEY")
 routePromise = client.findRoutes("Ferry")
-routePromise.then((response) ->
-  console.log JSON.stringify response, false, 4
-).fail((err) ->
-  console.log err
+routePromise.then(
+  (response) ->
+    console.log JSON.stringify response, false, 4
+,
+  (err) ->
+    console.log err
 ).done()
 ```
 ##### node
@@ -22,11 +24,14 @@ routePromise.then((response) ->
 var MBTA = require('./index');
 var client = new MBTA("CURRENT_DEMO_KEY");
 var routePromise = client.findRoutes("Ferry");
-routePromise.then(function(response) {
-  console.log(JSON.stringify(response, false, 4))
-}).fail(function(err){
-  console.log(err)
-}).done();
+routePromise.then(
+  function(response) {
+    console.log(JSON.stringify(response, false, 4));
+  },
+  function(err){
+    console.log(err);
+  }
+).done();
 ```
 
 both output:
