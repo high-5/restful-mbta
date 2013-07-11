@@ -52,7 +52,7 @@ class MBTA
 
     deferred.resolve filteredList
 
-  findRoutes: (routeKey) =>
+  findRoutes: (routeKey) ->
     deferred = $.Deferred()
     parseRoutes = @_parseRoutes.bind @, deferred, routeKey
     @routes().then(parseRoutes).fail (e) -> deferred.reject e
