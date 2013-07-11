@@ -3,10 +3,8 @@ restful-mbta
 
 Node.js wrapper for MBTA's RESTful API.
 
-A demo api key can be retreived at any time from [here](http://realtime.mbta.com/Portal/Content/Download/APIKey.txt)
-
 #### Sample Usage
- - the mbta demo key is 
+ - the mbta demo key is available [here](http://realtime.mbta.com/Portal/Content/Download/APIKey.txt)
 
 ##### coffee
 ```coffeescript
