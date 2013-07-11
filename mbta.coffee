@@ -70,7 +70,8 @@ class MBTA
       route
 
     routeList = _.flatten routeArray
-    filteredList = routeList.filter (r) -> routeKey in r.route_name
+    filteredList = routeList.filter (r) ->
+      r.route_name.indexOf(routeKey) isnt -1
 
     deferred.resolve filteredList
 
