@@ -1,22 +1,23 @@
 Q = require 'q'
 request = require 'request'
-_ = require 'lodash'
 
 class MBTA
   constructor: (@key) ->
     @apiUrl = 'http://realtime.mbta.com/developer/api/v1/'
 
-  _parse:
-    routes: (routesResponse) ->
-      routeList = []
-      for routeType in routesResponse.mode
-        fatRoutes = routeType.route.map (route) ->
-          route.route_type = routeType.route_type
-          route.mode_name = routeType.mode_name
-          route
-        routeList = routeList.concat(fatRoutes)
+  _parseRoutes: (routesResponse) ->
+    routeList = []
+    for routeType in routesResponse.mode
+      fatRoutes = routeType.route.map (route) ->
+        route.route_type = routeType.route_type
+        route.mode_name = routeType.mode_name
+        route
+      routeList = routeList.concat(fatRoutes)
 
-      routeList
+    routeList
+
+  _parse:
+    routes: @_parseRoutes
 
   buildOptions: (path, qsOpts) ->
     (
@@ -78,13 +79,13 @@ class MBTA
   alertHeadersByStop: (stop) ->
     @_doRequest @buildOptions "alertheadersbystop", @_addKey({ stop })
 
-  _parseRoutes: (deferred, routeKey, routes) ->
+  _resolveRoutes: (deferred, routeKey, routes) ->
     deferred.resolve routes.filter (r) -> r.route_name.indexOf(routeKey) isnt -1
 
   findRoutes: (routeKey) ->
     deferred = Q.defer()
-    parseRoutes = @_parseRoutes.bind @, deferred, routeKey
-    @routes().then(parseRoutes).fail (e) -> deferred.reject e
+    resolveRoutes = @_resolveRoutes.bind @, deferred, routeKey
+    @routes().then(resolveRoutes).fail (e) -> deferred.reject e
     deferred.promise
 
 module.exports = MBTA
