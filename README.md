@@ -39,19 +39,27 @@ both output:
 [
     {
         "route_id": "Boat-F4",
-        "route_name": "Charlestown Ferry"
+        "route_name": "Charlestown Ferry",
+        "route_type": "4",
+        "mode_name": "Boat"
     },
     {
         "route_id": "Boat-F1",
-        "route_name": "Hingham Ferry"
+        "route_name": "Hingham Ferry",
+        "route_type": "4",
+        "mode_name": "Boat"
     },
     {
         "route_id": "Boat-F2",
-        "route_name": "Quincy Ferry"
+        "route_name": "Quincy Ferry",
+        "route_type": "4",
+        "mode_name": "Boat"
     },
     {
         "route_id": "Boat-F2(H)",
-        "route_name": "Quincy/Hull Ferry"
+        "route_name": "Quincy/Hull Ferry",
+        "route_type": "4",
+        "mode_name": "Boat"
     }
 ]
 ```
