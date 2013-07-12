@@ -6,19 +6,35 @@ class MBTA
   constructor: (@key) ->
     @apiUrl = 'http://realtime.mbta.com/developer/api/v1/'
 
+  _parse:
+    routes: (routesResponse) ->
+      routeList = []
+      for routeType in routesResponse.mode
+        fatRoutes = routeType.route.map (route) ->
+          route.route_type = routeType.route_type
+          route.mode_name = routeType.mode_name
+          route
+        routeList = routeList.concat(fatRoutes)
+
+      routeList
+
   buildOptions: (path, qsOpts) ->
     (
       url: "#{@apiUrl}#{path}"
       json: true
       qs: qsOpts
+      type: path
     )
 
   _doRequest: (opts) ->
     deferred = Q.defer()
+    type = opts.type
+    delete opts.type
 
-    request.get opts, (e,r,body) ->
+    request.get opts, (e,r,body) =>
+
       return deferred.reject e if e
-      deferred.resolve body
+      deferred.resolve @_parse[type]?(body) or body
 
     deferred.promise
 
@@ -63,17 +79,7 @@ class MBTA
     @_doRequest @buildOptions "alertheadersbystop", @_addKey({ stop })
 
   _parseRoutes: (deferred, routeKey, routes) ->
-    routeArray = routes.mode.map (r) ->
-      route = r.route
-      route.route_type = r.route_type
-      route.mode_name = r.mode_name
-      route
-
-    routeList = _.flatten routeArray
-    filteredList = routeList.filter (r) ->
-      r.route_name.indexOf(routeKey) isnt -1
-
-    deferred.resolve filteredList
+    deferred.resolve routes.filter (r) -> r.route_name.indexOf(routeKey) isnt -1
 
   findRoutes: (routeKey) ->
     deferred = Q.defer()
