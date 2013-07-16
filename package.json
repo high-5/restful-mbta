@@ -3,6 +3,9 @@
   "version": "0.0.3",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/aaylward/restful-mbta.git"
@@ -24,7 +27,10 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-watch": "~0.4.4"
+    "grunt-contrib-watch": "~0.4.4",
+    "mocha": "~1.12.0",
+    "grunt-cafe-mocha": "~0.1.8",
+    "should": "~1.2.2"
   },
   "keywords": [
     "transit",
