@@ -6,8 +6,8 @@ module.exports = (grunt) ->
         options:
           bare: true
         files:
-          'index.js': 'src/*.coffee'
-          'test/test.js': 'test/*.coffee'
+          'public/dist/mbta.js': 'src/*.coffee'
+          'public/test/test.js': 'test/*.coffee'
     watch:
       scripts:
         files: '**/*.coffee'
