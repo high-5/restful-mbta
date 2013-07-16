@@ -6,13 +6,23 @@ module.exports = (grunt) ->
         options:
           bare: true
         files:
-          'index.js': 'src/*'
+          'index.js': 'src/*.coffee'
+          'test/test.js': 'test/*.coffee'
     watch:
       scripts:
-        files: 'src/*'
-        tasks: ['coffee']
+        files: '**/*.coffee'
+        tasks: ['default']
+    cafemocha:
+      test:
+        src: 'test/*.js'
+        options:
+          ui: 'tdd'
+          growl: true
+          require: ['should']
+          reporter: 'nyan'
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-cafe-mocha'
 
-  grunt.registerTask 'default', ['coffee']
+  grunt.registerTask 'default', ['coffee', 'cafemocha']
