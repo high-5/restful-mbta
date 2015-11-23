@@ -6,6 +6,10 @@
   "engines": {
     "node": ">= 0.8.0"
   },
+  "scripts": {
+    "start": "grunt && grunt watch",
+    "build": "grunt"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/aaylward/restful-mbta.git"
@@ -19,18 +23,19 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "coffee-script": "~1.6.3",
-    "request": "~2.22.x",
-    "q": "~0.9.6"
+    "coffee-script": "^1.10.0",
+    "q": "^1.4.1",
+    "request": "^2.67.0"
   },
   "readmeFilename": "README.md",
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-watch": "~0.4.4",
-    "mocha": "~1.12.0",
-    "grunt-cafe-mocha": "~0.1.8",
-    "should": "~1.2.2"
+    "grunt": "^0.4.5",
+    "grunt-cafe-mocha": "^0.1.13",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "mocha": "^2.3.4",
+    "should": "^7.1.1"
   },
   "keywords": [
     "transit",
